@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @SpringBootApplication
 @org.springframework.stereotype.Controller
-public class Controller {
+public class serviceController {
 	public static void main(String[] args) {
-		SpringApplication.run(Controller.class, args);
+		SpringApplication.run(serviceController.class, args);
 	}
 	@GetMapping("/hello")
 	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
