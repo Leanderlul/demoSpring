@@ -1,0 +1,61 @@
+
+body{
+    background-image: url('https://wallpapercat.com/w/full/c/1/d/945943-1920x1080-desktop-full-hd-matte-black-background.jpg');
+
+}
+
+
+
+/*#b1{
+
+
+    border-radius: 5px;
+    padding: 3px;
+    border: 1px solid #ccc;
+}
+
+input{
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+h1{
+    color: white;
+}
+
+#ausgabe{
+    color: white;
+
+    font-size: 20px;
+}
+
+span{
+    color: white;
+}
+*/
+.buttons{
+    display: grid;
+    grid-template-columns: repeat(4,30px);
+    gap: 15px;
+}
+
+.buttons button {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2em;
+    border: none;
+    background-color: darkgray;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.display {
+    width: 160px;
+    height: 40px;
+    text-align: right;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    padding: 5px;
+}

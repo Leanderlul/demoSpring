@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/stylesheet/rechner.css">
+  <link rel="icon" type="text/css" href="/images/rechner.ico">
+  <title>Calculator</title>
+</head>
+<body>
+<h1>Calculator</h1>
+
+<div class="calculator">
+<input type="text" class="display" id="display" disabled>
+
+<div class="buttons">
+<button onclick="addNumber('1')">1</button>
+<button onclick="addNumber('2')">2</button>
+<button onclick="addNumber('3')">3</button>
+<button onclick="setOperator('+')">+</button>
+
+<button onclick="addNumber('4')">4</button>
+<button onclick="addNumber('5')">5</button>
+<button onclick="addNumber('6')">6</button>
+<button onclick="setOperator('-')">-</button>
+
+<button onclick="addNumber('7')">7</button>
+<button onclick="addNumber('8')">8</button>
+<button onclick="addNumber('9')">9</button>
+<button onclick="setOperator('*')">*</button>
+
+  <button onclick="clearDisplay()">C</button>
+<button onclick="addNumber('0')">0</button>
+<button onclick="calculate()" class="equals">=</button>
+<button onclick="setOperator('/')">/</button>
+
+
+
+
+</div>
+</div>
+
+<script>
+
+  let currentInput = '';
+  let operator = '';
+  let previousInput = '';
+  let input = '';
+
+
+  function addNumber(number) {
+
+    currentInput += number;
+    input += number;
+    document.getElementById('display').value = input;
+  }
+
+  function setOperator(op){
+    operator = op;
+    previousInput = currentInput;
+    currentInput = '';
+    input += op;
+    document.getElementById('display').value = input
+  }
+
+  function calculate() {
+    let result;
+
+    if (operator === '+') {
+      result = parseFloat(previousInput) + parseFloat(currentInput);
+    }
+
+    else if (operator === '-') {
+      result = parseFloat(previousInput) - parseFloat(currentInput);
+    }
+
+    else if (operator === '*') {
+      result = parseFloat(previousInput) * parseFloat(currentInput);
+    }
+    else if(operator === '/' && currentInput === '0'){
+      result = "Error";
+    }
+    else if (operator === '/') {
+      result = parseFloat(previousInput) / parseFloat(currentInput);
+    }
+
+    document.getElementById('display').value = result;
+    currentInput = result.toString();
+    operator = '';
+  }
+
+  function clearDisplay() {
+    currentInput = '';
+    previousInput = '';
+    operator = '';
+    input = '';
+    document.getElementById('display').value = ''; // Clear the display
+  }
+
+</script>
+
+<!--<input type="number" name="zahl1" placeholder="zahl1" id="z1"><br>
+
+  <span>Operator wählen:</span>
+  <select name="rechenzeichen" id="r1">
+    <option value="+">+</option>
+    <option value="-">-</option>
+    <option value="*">*</option>
+    <option value="/">/</option>
+  </select>
+
+  <button onclick="berechnen()" id="b1">Berechne</button><br>
+
+  <input type="number" name="zahl2" placeholder="zahl2" id="z2">
+
+
+
+
+
+<div id="ausgabe"></div>-->
+
+<!--<script>
+  function berechnen() {
+
+  zahl1 = parseFloat(document.getElementById("z1").value);
+  zahl2 = parseFloat(document.getElementById("z2").value);
+
+  eingabe = document.getElementById("r1");
+  zeichen = eingabe.value;
+
+  if (zeichen === '+') {
+    document.getElementById("ausgabe").innerText = zahl1 + zahl2;
+
+  }
+
+  if (zeichen === '-') {
+    document.getElementById("ausgabe").innerText = zahl1 - zahl2;
+  }
+
+  if (zeichen === '*') {
+    document.getElementById("ausgabe").innerText = zahl1 * zahl2;
+  }
+
+  if (zeichen === '/') {
+    document.getElementById("ausgabe").innerText = zahl1 / zahl2;
+  }
+
+}
+</script>-->
+
+</body>
+</html>
