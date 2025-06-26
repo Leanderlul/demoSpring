@@ -6,34 +6,7 @@ body{
 
 
 
-/*#b1{
 
-
-    border-radius: 5px;
-    padding: 3px;
-    border: 1px solid #ccc;
-}
-
-input{
-    border-radius: 5px;
-    padding: 5px;
-    border: 1px solid #ccc;
-}
-
-h1{
-    color: white;
-}
-
-#ausgabe{
-    color: white;
-
-    font-size: 20px;
-}
-
-span{
-    color: white;
-}
-*/
 .buttons{
     display: grid;
     grid-template-columns: repeat(4,30px);
