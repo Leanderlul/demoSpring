@@ -1,4 +1,6 @@
-
+h1{
+    color: white;
+}
 body{
     background-image: url('https://wallpapercat.com/w/full/c/1/d/945943-1920x1080-desktop-full-hd-matte-black-background.jpg');
 
@@ -32,3 +34,4 @@ body{
     font-size: 1.5em;
     padding: 5px;
 }
+

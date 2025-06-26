@@ -20,6 +20,11 @@ public class serviceController {
 	public String landingpage() {
 		return "landingpage";
 	}
+
+	@PostMapping("/BMI")
+	public String bmi(){
+		return "bmi";
+	}
 }
 
 
