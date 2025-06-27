@@ -69,31 +69,33 @@
     document.getElementById('display').value = input
   }
 
-  function calculate() {
-    let result;
+function calculate()
+  {
 
-    if (operator === '+') {
-      result = parseFloat(previousInput) + parseFloat(currentInput);
-    }
+    const params = new URLSearchParams();
+    params.append("previousInput", previousInput);
+    params.append("currentInput", currentInput);
+    params.append("op", operator);
 
-    else if (operator === '-') {
-      result = parseFloat(previousInput) - parseFloat(currentInput);
-    }
-
-    else if (operator === '*') {
-      result = parseFloat(previousInput) * parseFloat(currentInput);
-    }
-    else if(operator === '/' && currentInput === '0'){
-      result = "Error";
-    }
-    else if (operator === '/') {
-      result = parseFloat(previousInput) / parseFloat(currentInput);
-    }
-
-    document.getElementById('display').value = result;
-    currentInput = result.toString();
-    operator = '';
+    fetch("/Rechner", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: params
+    })
+            .then(response => response.text())
+            .then(result => {
+              document.getElementById('display').value = result;
+              currentInput = result.toString();
+              operator = '';
+            });
   }
+
+
+
+
+
 
   function clearDisplay() {
     currentInput = '';

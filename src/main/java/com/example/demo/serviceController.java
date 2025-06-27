@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class serviceController {
 
-	@PostMapping("/Rechner")
-	public String rechner(){
-		return "rechner";
-	}
+
+
+		@GetMapping("/Rechner")
+		public String zeigeRechnerSeite() {
+			return "rechner"; //
+		}
+
 
 	@GetMapping("/")
 	public String landingpage() {
