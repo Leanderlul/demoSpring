@@ -2,13 +2,17 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Entity
 @Table(name = "history")
 public class History {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private double calculation;
 
@@ -27,5 +31,10 @@ public class History {
     }
     public double getCalculation() {
         return calculation;
+    }
+
+    public void setTimestamp() {
+        LocalDateTime now = LocalDateTime.now();
+        timestamp = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }

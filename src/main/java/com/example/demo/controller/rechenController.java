@@ -13,13 +13,14 @@ public class rechenController {
 
     @Autowired
     private historyRepo historyRepo;
-    History dieHistory  = new History();
+
 
     @PostMapping("/Rechner")
     public String rechne(
             @RequestParam String previousInput,
             @RequestParam String currentInput,
             @RequestParam String op) {
+
 
         double zahl1 = Integer.parseInt(previousInput);
         double zahl2 = Integer.parseInt(currentInput);
@@ -35,7 +36,9 @@ public class rechenController {
                 result = zahl1 / zahl2; break;
             default: return "Ungültiger Operator";
         }
+        History dieHistory  = new History();
 
+        dieHistory.setTimestamp();
         dieHistory.setCalculation(result);
         historyRepo.save(dieHistory);
 
