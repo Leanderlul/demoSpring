@@ -10,18 +10,20 @@ public class serviceController {
 
 
 
-	    @GetMapping("/Rechner")
+
+
+	    @GetMapping("/rechner")
 		public String zeigeRechnerSeite() {
 			return "rechner"; //
 		}
 
 
-	@GetMapping("/")
+	@GetMapping({"/", "/home"})
 	public String landingpage() {
 		return "landingpage";
 	}
 
-	@PostMapping("/BMI")
+	@PostMapping("/bmi")
 	public String bmi(){
 		return "bmi";
 	}

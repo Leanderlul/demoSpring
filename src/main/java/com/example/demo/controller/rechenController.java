@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 import com.example.demo.model.History;
-import com.example.demo.repositorys.historyRepo;
+import com.example.demo.repositorys.HistoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class rechenController {
 
     @Autowired
-    private historyRepo historyRepo;
+    private HistoryRepo historyRepo;
 
 
-    @PostMapping("/Rechner")
+    @PostMapping("/rechner")
     public String rechne(
             @RequestParam String previousInput,
             @RequestParam String currentInput,
