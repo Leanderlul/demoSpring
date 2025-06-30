@@ -22,8 +22,8 @@ public class rechenController {
             @RequestParam String op) {
 
 
-        double zahl1 = Integer.parseInt(previousInput);
-        double zahl2 = Integer.parseInt(currentInput);
+        double zahl1 = Double.parseDouble(previousInput);
+        double zahl2 = Double.parseDouble(currentInput);
 
         double result;
 
