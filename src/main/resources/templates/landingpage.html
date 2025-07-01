@@ -18,7 +18,7 @@
 
         <a class="btn btn-primary mb-3" th:href="@{/rechner}" id="b1">Taschenrechner</a><br>
         <a class="btn btn-secondary mb-3" th:href="@{/bmi}" id="b2">BMI Rechner</a><br>
-        <a class="btn btn-primary mb-3" th:href="@{/rating}" id="b1">Bewertungen</a><br>
+        <a class="btn btn-primary mb-3" th:href="@{/rating}" id="b3">Bewertungen</a><br>
 
         <form th:action="@{/logout}" method="post" class="logout-form">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
@@ -33,6 +33,10 @@
     </div>
 
 </div>
+
+<script>
+    document.getElementById("b2").disabled = true;
+</script>
 
 </body>
 </html>
