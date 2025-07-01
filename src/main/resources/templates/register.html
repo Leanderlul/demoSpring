@@ -41,15 +41,22 @@
               <div class="mb-3">
                 <label for="password" class="mb-2 text-muted">Passwort</label>
                 <input type="password" id="password" name="password" class="form-control" required
-                       pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{12,}"
-                       title="Mindestens 8 Zeichen mit Groß-/Kleinbuchstaben, Zahl und Sonderzeichen">
+                       pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!:;,\-\.]).{12,}" title="Mindestens 12 Zeichen mit Groß-/Kleinbuchstaben und Sonderzeichen" />
+
                 <div class="invalid-feedback">Mindestens 12 Zeichen mit Groß-/Kleinbuchstaben und Sonderzeichen</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="confirm-password" class="mb-2 text-muted">Passwort bestätigen</label>
+                <input type="password" id="confirm-password" name="confirmPassword" class="form-control" required>
+                <div class="invalid-feedback">Passwörter stimmen nicht überein</div>
               </div>
 
               <div class="d-flex align-items-center">
                 <button type="submit" class="btn btn-primary ms-auto">Registrieren</button>
               </div>
             </form>
+
           </div>
 
           <div class="card-footer py-3 border-0 text-center">
@@ -68,16 +75,32 @@
   (function () {
     'use strict';
     const forms = document.querySelectorAll('.needs-validation');
+
     Array.from(forms).forEach(form => {
+      const password = form.querySelector('#password');
+      const confirmPassword = form.querySelector('#confirm-password');
+
       form.addEventListener('submit', function (event) {
+        // Zuerst Standard-Validierung vorbereiten
+        confirmPassword.setCustomValidity("");
+
+        // Prüfen, ob Passwörter gleich sind
+        if (password.value !== confirmPassword.value) {
+          confirmPassword.setCustomValidity("Passwörter stimmen nicht überein");
+        }
+
+        // Jetzt gesamte Gültigkeit prüfen (inkl. Pattern)
         if (!form.checkValidity()) {
           event.preventDefault();
           event.stopPropagation();
         }
+
         form.classList.add('was-validated');
       }, false);
     });
   })();
 </script>
+
+
 </body>
 </html>

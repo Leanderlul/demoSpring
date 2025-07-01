@@ -1,59 +1,18 @@
-/* Links im Fließtext (Login/Register) */
-a.auth-link {
-    color: black !important;
-    text-decoration: none !important;
+button{
+
+
+
+    margin: 20px;
+    font-size: 1.2em;
+    border: none;
+    background-color: rgba(80, 80, 80, 0.6);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.auth-link:hover {
-    text-decoration: underline !important; /* Optional: Unterstreichen beim Hover */
-}
-
-/* Buttons links und Logout */
-a.btn.btn-primary {
-    background-color: #555 !important; /* Dunkelgrau statt blau */
-    border-color: #555 !important;
-    color: white !important;
-    text-decoration: none !important;
-}
-
-a.btn.btn-primary:hover {
-    background-color: #444 !important;
-    border-color: #444 !important;
-    color: white !important;
-}
-
-a.btn.btn-secondary {
-    background-color: #777 !important; /* Etwas helleres grau */
-    border-color: #777 !important;
-    color: white !important;
-    text-decoration: none !important;
-}
-
-a.btn.btn-secondary:hover {
-    background-color: #666 !important;
-    border-color: #666 !important;
-    color: white !important;
-}
-
-/* Logout-Button (form button) */
-.logout-form button.btn-danger {
-    background-color: #aa0000 !important; /* Dunkelrot */
-    border-color: #aa0000 !important;
-    color: white !important;
-    text-decoration: none !important;
-}
-
-.logout-form button.btn-danger:hover {
-    background-color: #880000 !important;
-    border-color: #880000 !important;
-    color: white !important;
-}
-
-/* Container */
-body {
+body{
     background-image: url("https://wallpapercave.com/wp/wp2561072.jpg");
     text-align: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+
 }
