@@ -77,7 +77,7 @@
 
     <div th:each="rating : ${ratings}" class="review-box">
         <div>
-            <strong th:text="${rating.name}">Benutzername</strong>
+            <strong th:text="${rating.login.name}">Benutzername</strong>
             <span class="stars">
         <span th:each="star : ${#numbers.sequence(1, rating.stars)}">&#9733;</span>
       </span>

@@ -14,13 +14,13 @@ public class Ratings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
     private String description;
 
     private int stars;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "login_id", nullable = false)
+    private Login login;
 
 
     public void setId(Long id) {
@@ -31,13 +31,8 @@ public class Ratings {
         return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
+    public Login getLogin() { return login; }
+    public void setLogin(Login login) { this.login = login; }
 
     public void setDescription(String description) {
 
