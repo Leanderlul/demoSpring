@@ -23,10 +23,16 @@ public class serviceController {
 		return "landingpage";
 	}
 
-	@PostMapping("/bmi")
+	@GetMapping("/bmi")
 	public String bmi(){
 		return "bmi";
 	}
+
+	@GetMapping("/map")
+	public String map(){
+		return "map";
+	}
+
 }
 
 

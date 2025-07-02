@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  <title>Mein Standort auf der Weltkarte</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+    #map {
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  // Karte initialisieren
+  const map = L.map('map').setView([0, 0], 2); // Standardstart
+
+  // OpenStreetMap-Kachel hinzufügen
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap',
+    maxZoom: 18
+  }).addTo(map);
+
+  // Versuche den aktuellen Standort zu ermitteln
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+            function(position) {
+              const lat = position.coords.latitude;
+              const lon = position.coords.longitude;
+
+              // Marker auf aktuellem Standort
+              const marker = L.marker([lat, lon]).addTo(map);
+              marker.bindPopup("Du bist hier!").openPopup();
+
+              // Auf Standort zoomen
+              map.setView([lat, lon], 13);
+            },
+            function(error) {
+              alert("Standort konnte nicht ermittelt werden.");
+              console.error(error);
+            }
+    );
+  } else {
+    alert("Geolocation wird von deinem Browser nicht unterstützt.");
+  }
+</script>
+
+</body>
+</html>
