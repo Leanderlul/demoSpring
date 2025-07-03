@@ -78,7 +78,9 @@
           placeholder="Preis pro Liter (€)"
   />
   <button id="routeBtn">Route anzeigen</button>
+  <button id="clearBtn" type="button">Alle Waypoints löschen</button>
   <div id="result"></div>
+
 </div>
 
 <div id="map"></div>
@@ -122,18 +124,34 @@
     const preis = parseFloat(document.getElementById("preis").value);
     const resultDiv = document.getElementById("result");
 
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      if (routingControl) {
+        const waypoints = routingControl.getWaypoints();
+
+        if (waypoints.length >= 2) {
+          // Nur Start und Ziel behalten
+          const newWaypoints = [waypoints[0], waypoints[waypoints.length - 1]];
+          routingControl.setWaypoints(newWaypoints);
+
+        }
+
+        document.getElementById('result').innerHTML = ''; // Ergebnis leeren
+      }
+    });
+
     if (!startCity || !endCity) {
       alert("Bitte beide Städte eingeben!");
       return;
     }
-    if (isNaN(verbrauch) || verbrauch <= 0) {
+
+   /* if (isNaN(verbrauch) || verbrauch <= 0) {
       alert("Bitte gültigen Verbrauch eingeben (Liter pro 100 km)!");
       return;
     }
     if (isNaN(preis) || preis <= 0) {
       alert("Bitte gültigen Preis pro Liter eingeben!");
       return;
-    }
+    }*/
 
     try {
       const startCoords = await geocode(startCity);
@@ -145,7 +163,7 @@
 
       routingControl = L.Routing.control({
         waypoints: [startCoords, endCoords],
-        routeWhileDragging: true,
+        routeWhileDragging: false,
         language: "de",
       }).addTo(map);
 
@@ -166,6 +184,12 @@
             Kosten: <strong>${kosten.toFixed(2)} €</strong>
           `;
       });
+
+
+
+
+
+
 
       // Auf Route zoomen
       map.fitBounds(L.latLngBounds([startCoords, endCoords]));
