@@ -1,7 +1,6 @@
 package com.example.demo.securingweb;
 
 
-
 import com.example.demo.model.Login;
 import com.example.demo.repositorys.LoginRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +33,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/stylesheet/**", "/images/**","/", "/home", "/login", "/register", "/css/**").permitAll()
-                        .requestMatchers("/ratings","ratings/submit","/Rechner/**", "/bmi/**","/map/**").authenticated()
+                        .requestMatchers("/stylesheet/**", "/images/**", "/", "/home", "/login", "/register", "/css/**").permitAll()
+                        .requestMatchers("/ratings", "ratings/submit", "/Rechner/**", "/bmi/**", "/map/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

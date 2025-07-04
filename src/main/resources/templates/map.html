@@ -1,86 +1,91 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="_csrf" th:content="${_csrf.token}" />
-  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
-  <title>Routing mit Verbrauchs- und Kostenrechner</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Routing mit Verbrauchs- und Kostenrechner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <!-- Leaflet CSS -->
-  <link
-          rel="stylesheet"
-          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
-  <!-- Leaflet Routing Machine CSS -->
-  <link
-          rel="stylesheet"
-          href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"
-  />
+    <!-- Leaflet CSS -->
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <!-- Leaflet Routing Machine CSS -->
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"
+    />
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <style>
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      font-family: Arial, sans-serif;
-    }
-    #inputs {
-      padding: 10px;
-      background: #eee;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-    #map {
-      flex: 1;
-    }
-    input[type="text"],
-    input[type="number"] {
-      padding: 5px;
-      font-size: 1em;
-      width: 180px;
-    }
-    button {
-      padding: 6px 12px;
-      font-size: 1em;
-      cursor: pointer;
-    }
-    #result {
-      margin-left: 10px;
-      font-weight: bold;
-      min-width: 220px;
-    }
-  </style>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+        }
+
+        #inputs {
+            padding: 10px;
+            background: #eee;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        #map {
+            flex: 1;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 5px;
+            font-size: 1em;
+            width: 180px;
+        }
+
+        button {
+            padding: 6px 12px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-left: 10px;
+            font-weight: bold;
+            min-width: 220px;
+        }
+    </style>
 </head>
 <body>
 <a href="/" class="btn btn-primary mb-3">Home</a>
 <div id="inputs">
-  <input id="startCity" type="text" placeholder="Startstadt eingeben" />
-  <input id="endCity" type="text" placeholder="Zielstadt eingeben" />
-  <input
-          id="verbrauch"
-          type="number"
-          min="0"
-          step="0.1"
-          placeholder="Verbrauch (L/100km)"
-  />
-  <input
-          id="preis"
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="Preis pro Liter (€)"
-  />
-  <button id="routeBtn">Route anzeigen</button>
-  <button id="clearBtn" type="button">Alle Waypoints löschen</button>
-  <div id="result"></div>
+    <input id="startCity" type="text" placeholder="Startstadt eingeben"/>
+    <input id="endCity" type="text" placeholder="Zielstadt eingeben"/>
+    <input
+            id="verbrauch"
+            type="number"
+            min="0"
+            step="0.1"
+            placeholder="Verbrauch (L/100km)"
+    />
+    <input
+            id="preis"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="Preis pro Liter (€)"
+    />
+    <button id="routeBtn">Route anzeigen</button>
+    <button id="clearBtn" type="button">Alle Waypoints löschen</button>
+    <div id="result"></div>
 
 </div>
 
@@ -92,113 +97,107 @@
 <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 
 <script>
-  const map = L.map("map").setView([51.1657, 10.4515], 6);
+    const map = L.map("map").setView([51.1657, 10.4515], 6);
 
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap",
-    maxZoom: 18,
-  }).addTo(map);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap",
+        maxZoom: 18,
+    }).addTo(map);
 
-  let routingControl = null;
+    let routingControl = null;
 
-  async function geocode(city) {
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+    async function geocode(city) {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
             city
-    )}`;
-    const response = await fetch(url, {
-      headers: {
-        "Accept-Language": "de",
-      },
-    });
-    const data = await response.json();
-    if (data && data.length > 0) {
-      return L.latLng(data[0].lat, data[0].lon);
-    } else {
-      throw new Error(`Ort "${city}" nicht gefunden`);
+        )}`;
+        const response = await fetch(url, {
+            headers: {
+                "Accept-Language": "de",
+            },
+        });
+        const data = await response.json();
+        if (data && data.length > 0) {
+            return L.latLng(data[0].lat, data[0].lon);
+        } else {
+            throw new Error(`Ort "${city}" nicht gefunden`);
+        }
     }
-  }
 
-  document.getElementById("routeBtn").addEventListener("click", async () => {
-    const startCity = document.getElementById("startCity").value.trim();
-    const endCity = document.getElementById("endCity").value.trim();
-    const verbrauch = parseFloat(document.getElementById("verbrauch").value);
-    const preis = parseFloat(document.getElementById("preis").value);
-    const resultDiv = document.getElementById("result");
+    document.getElementById("routeBtn").addEventListener("click", async () => {
+        const startCity = document.getElementById("startCity").value.trim();
+        const endCity = document.getElementById("endCity").value.trim();
+        const verbrauch = parseFloat(document.getElementById("verbrauch").value);
+        const preis = parseFloat(document.getElementById("preis").value);
+        const resultDiv = document.getElementById("result");
 
-    document.getElementById('clearBtn').addEventListener('click', () => {
-      if (routingControl) {
-        const waypoints = routingControl.getWaypoints();
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            if (routingControl) {
+                const waypoints = routingControl.getWaypoints();
 
-        if (waypoints.length >= 2) {
-          // Nur Start und Ziel behalten
-          const newWaypoints = [waypoints[0], waypoints[waypoints.length - 1]];
-          routingControl.setWaypoints(newWaypoints);
+                if (waypoints.length >= 2) {
+                    // Nur Start und Ziel behalten
+                    const newWaypoints = [waypoints[0], waypoints[waypoints.length - 1]];
+                    routingControl.setWaypoints(newWaypoints);
 
+                }
+
+                document.getElementById('result').innerHTML = ''; // Ergebnis leeren
+            }
+        });
+
+        if (!startCity || !endCity) {
+            alert("Bitte beide Städte eingeben!");
+            return;
         }
 
-        document.getElementById('result').innerHTML = ''; // Ergebnis leeren
-      }
-    });
+        /* if (isNaN(verbrauch) || verbrauch <= 0) {
+           alert("Bitte gültigen Verbrauch eingeben (Liter pro 100 km)!");
+           return;
+         }
+         if (isNaN(preis) || preis <= 0) {
+           alert("Bitte gültigen Preis pro Liter eingeben!");
+           return;
+         }*/
 
-    if (!startCity || !endCity) {
-      alert("Bitte beide Städte eingeben!");
-      return;
-    }
+        try {
+            const startCoords = await geocode(startCity);
+            const endCoords = await geocode(endCity);
 
-   /* if (isNaN(verbrauch) || verbrauch <= 0) {
-      alert("Bitte gültigen Verbrauch eingeben (Liter pro 100 km)!");
-      return;
-    }
-    if (isNaN(preis) || preis <= 0) {
-      alert("Bitte gültigen Preis pro Liter eingeben!");
-      return;
-    }*/
+            if (routingControl) {
+                map.removeControl(routingControl);
+            }
 
-    try {
-      const startCoords = await geocode(startCity);
-      const endCoords = await geocode(endCity);
+            routingControl = L.Routing.control({
+                waypoints: [startCoords, endCoords],
+                routeWhileDragging: false,
+                language: "de",
+            }).addTo(map);
 
-      if (routingControl) {
-        map.removeControl(routingControl);
-      }
+            // Sobald die Route fertig geladen ist, rechnen wir Verbrauch und Kosten
+            routingControl.on("routesfound", function (e) {
+                const route = e.routes[0];
+                // Entfernung in Metern → km
+                const distKm = route.summary.totalDistance / 1000;
 
-      routingControl = L.Routing.control({
-        waypoints: [startCoords, endCoords],
-        routeWhileDragging: false,
-        language: "de",
-      }).addTo(map);
+                // Verbrauch (L) = distKm * (verbrauch / 100)
+                const verbrauchGesamt = distKm * (verbrauch / 100);
+                // Kosten (€) = verbrauchGesamt * preis
+                const kosten = verbrauchGesamt * preis;
 
-      // Sobald die Route fertig geladen ist, rechnen wir Verbrauch und Kosten
-      routingControl.on("routesfound", function (e) {
-        const route = e.routes[0];
-        // Entfernung in Metern → km
-        const distKm = route.summary.totalDistance / 1000;
-
-        // Verbrauch (L) = distKm * (verbrauch / 100)
-        const verbrauchGesamt = distKm * (verbrauch / 100);
-        // Kosten (€) = verbrauchGesamt * preis
-        const kosten = verbrauchGesamt * preis;
-
-        resultDiv.innerHTML = `
+                resultDiv.innerHTML = `
             Entfernung: <strong>${distKm.toFixed(1)} km</strong><br />
             Verbrauch: <strong>${verbrauchGesamt.toFixed(2)} L</strong><br />
             Kosten: <strong>${kosten.toFixed(2)} €</strong>
           `;
-      });
+            });
 
-
-
-
-
-
-
-      // Auf Route zoomen
-      map.fitBounds(L.latLngBounds([startCoords, endCoords]));
-    } catch (error) {
-      alert(error.message);
-      resultDiv.innerHTML = "";
-    }
-  });
+            // Auf Route zoomen
+            map.fitBounds(L.latLngBounds([startCoords, endCoords]));
+        } catch (error) {
+            alert(error.message);
+            resultDiv.innerHTML = "";
+        }
+    });
 </script>
 </body>
 </html>

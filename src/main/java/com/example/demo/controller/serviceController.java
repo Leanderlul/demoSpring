@@ -8,12 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class serviceController {
 
-
-
-
-
-
-
 	@GetMapping({"/", "/home"})
 	public String landingpage() {
 		return "landingpage";
