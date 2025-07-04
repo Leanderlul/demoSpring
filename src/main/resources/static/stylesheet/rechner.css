@@ -3,12 +3,40 @@ h1{
 }
 body{
     background-image: url('https://wallpapercat.com/w/full/c/1/d/945943-1920x1080-desktop-full-hd-matte-black-background.jpg');
+    h1{
+        color: white;
+    }
+    body{
+        background-image: url('https://wallpapercat.com/w/full/c/1/d/945943-1920x1080-desktop-full-hd-matte-black-background.jpg');
+    }
 
+    .buttons{
+        display: grid;
+        grid-template-columns: repeat(4,30px);
+        gap: 15px;
+    }
 
+    .buttons button {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2em;
+        border: none;
+        background-color: darkgray;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+
+    }
+
+    .display {
+        width: 160px;
+        height: 40px;
+        text-align: right;
+        margin-bottom: 10px;
+        font-size: 1.5em;
+        padding: 5px;
+    }
 }
-
-
-
 
 .buttons{
     display: grid;
@@ -16,6 +44,7 @@ body{
     gap: 15px;
 
 }
+
 
 .buttons button {
     width: 40px;
@@ -37,4 +66,6 @@ body{
     font-size: 1.5em;
     padding: 5px;
 }
+
+
 

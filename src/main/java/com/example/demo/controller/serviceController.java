@@ -12,10 +12,6 @@ public class serviceController {
 
 
 
-	    @GetMapping("/rechner")
-		public String zeigeRechnerSeite() {
-			return "rechner"; //
-		}
 
 
 	@GetMapping({"/", "/home"})

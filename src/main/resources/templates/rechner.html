@@ -12,42 +12,56 @@
 </head>
 <body>
 <a href="/" class="btn btn-primary mb-3">Home</a>
-<h1>Calculator</h1>
+<h1>Taschenrechner</h1>
 
-<div class="calculator">
-  <label for="display">
+<div class="container mt-4">
+  <div class="row">
+    <!-- Linke Spalte: Rechner -->
+    <div class="col-md-6">
+      <div class="calculator">
+        <input type="text" class="display" id="display" disabled>
 
-  </label>
+        <div class="buttons">
+          <button onclick="addNumber('1')">1</button>
+          <button onclick="addNumber('2')">2</button>
+          <button onclick="addNumber('3')">3</button>
+          <button onclick="setOperator('+')">+</button>
 
-  <input type="text" class="display" id="display" disabled>
+          <button onclick="addNumber('4')">4</button>
+          <button onclick="addNumber('5')">5</button>
+          <button onclick="addNumber('6')">6</button>
+          <button onclick="setOperator('-')">-</button>
 
-<div class="buttons">
+          <button onclick="addNumber('7')">7</button>
+          <button onclick="addNumber('8')">8</button>
+          <button onclick="addNumber('9')">9</button>
+          <button onclick="setOperator('*')">*</button>
 
-  <button onclick="addNumber('1')">1</button>
-  <button onclick="addNumber('2')">2</button>
-  <button onclick="addNumber('3')">3</button>
-  <button onclick="setOperator('+')">+</button>
+          <button onclick="clearDisplay()">C</button>
+          <button onclick="addNumber('0')">0</button>
+          <button onclick="calculate()" class="equals">=</button>
+          <button onclick="setOperator('/')">/</button>
+        </div>
+      </div>
+    </div>
 
-  <button onclick="addNumber('4')">4</button>
-  <button onclick="addNumber('5')">5</button>
-  <button onclick="addNumber('6')">6</button>
-  <button onclick="setOperator('-')">-</button>
+    <!-- Rechte Spalte: Verlauf -->
+    <div class="col-md-6">
+      <div class="card" style="max-height: 400px; overflow-y: auto;">
+        <div class="card-header bg-secondary text-white">
+          Verlauf
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" th:each="h : ${history}">
 
-  <button onclick="addNumber('7')">7</button>
-  <button onclick="addNumber('8')">8</button>
-  <button onclick="addNumber('9')">9</button>
-  <button onclick="setOperator('*')">*</button>
-
-  <button onclick="clearDisplay()">C</button>
-  <button onclick="addNumber('0')">0</button>
-  <button onclick="calculate()" class="equals">=</button>
-  <button onclick="setOperator('/')">/</button>
-
-
-
-
+            <strong th:text="${h.calculation}"></strong>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
+
 
 <script>
 
